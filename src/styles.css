@@ -1,0 +1,86 @@
+:root {
+  --bg: #ffffff; --bg-2: #f6f7f9; --text: #15171a; --muted: #6b7280; --border: #e5e7eb;
+  --accent: #7c3aed; --accent-text: #fff; --user-bg: #f1edfd; --code-bg: #0f172a; --code-text: #e2e8f0;
+  font-family: Inter, system-ui, -apple-system, "Segoe UI", sans-serif;
+}
+:root[data-theme="dark"] {
+  --bg: #111316; --bg-2: #181b20; --text: #e7e9ee; --muted: #9aa1ad; --border: #2a2f37;
+  --accent: #a78bfa; --accent-text: #111; --user-bg: #2a2340; --code-bg: #0b0d10;
+}
+* { box-sizing: border-box; }
+html, body, #root { height: 100%; margin: 0; }
+body { background: var(--bg); color: var(--text); }
+button { font: inherit; color: inherit; background: none; border: 0; cursor: pointer; }
+
+.app { display: grid; grid-template-columns: 260px 1fr; height: 100%; }
+.sidebar { background: var(--bg-2); border-right: 1px solid var(--border); display: flex; flex-direction: column; padding: 12px; gap: 8px; min-height: 0; }
+.new-chat { border: 1px solid var(--border); border-radius: 10px; padding: 10px; text-align: left; font-weight: 600; }
+.new-chat:hover { background: var(--bg); }
+.sidebar nav { flex: 1; overflow-y: auto; display: flex; flex-direction: column; gap: 2px; }
+.conv { display: flex; align-items: center; border-radius: 8px; }
+.conv.active, .conv:hover { background: var(--bg); }
+.conv-title { flex: 1; text-align: left; padding: 8px 10px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: 14px; }
+.conv .icon-btn { opacity: 0; }
+.conv:hover .icon-btn, .conv.active .icon-btn { opacity: 1; }
+.sidebar-footer { display: flex; gap: 6px; border-top: 1px solid var(--border); padding-top: 8px; }
+.sidebar-footer button { flex: 1; padding: 8px; border-radius: 8px; font-size: 14px; }
+.sidebar-footer button:hover { background: var(--bg); }
+.icon-btn { color: var(--muted); font-size: 12px; padding: 4px 8px; border-radius: 6px; }
+.icon-btn:hover { color: var(--text); background: var(--bg-2); }
+
+.main { display: flex; flex-direction: column; min-width: 0; min-height: 0; }
+.topbar { display: flex; align-items: center; gap: 10px; padding: 12px 20px; border-bottom: 1px solid var(--border); }
+.brand { font-weight: 700; }
+.badge { font-size: 12px; color: var(--muted); border: 1px solid var(--border); border-radius: 999px; padding: 2px 8px; }
+.menu { display: none; font-size: 18px; }
+.scroll { flex: 1; overflow-y: auto; }
+.welcome { max-width: 720px; margin: 18vh auto 0; padding: 0 20px; text-align: center; }
+.welcome h1 { font-size: 28px; }
+.suggestions { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; }
+.suggestions button { border: 1px solid var(--border); border-radius: 12px; padding: 10px 14px; font-size: 14px; }
+.suggestions button:hover { background: var(--bg-2); }
+
+.thread { max-width: 780px; margin: 0 auto; padding: 24px 20px 40px; display: flex; flex-direction: column; gap: 22px; }
+.message { display: flex; gap: 12px; }
+.avatar { flex: none; width: 32px; height: 32px; border-radius: 50%; display: grid; place-items: center; font-size: 11px; font-weight: 700;
+  background: var(--accent); color: var(--accent-text); }
+.message.user .avatar { background: var(--border); color: var(--text); }
+.content { min-width: 0; flex: 1; }
+.message.user .plain { margin: 0; background: var(--user-bg); padding: 10px 14px; border-radius: 14px; white-space: pre-wrap; display: inline-block; }
+.message.error .markdown { color: #dc2626; }
+.markdown { line-height: 1.65; }
+.markdown > :first-child { margin-top: 0; }
+.markdown pre { background: var(--code-bg); color: var(--code-text); padding: 14px; border-radius: 10px; overflow-x: auto; font-size: 13.5px; }
+.markdown code { font-family: ui-monospace, "SF Mono", Menlo, monospace; }
+.markdown :not(pre) > code { background: var(--bg-2); padding: 2px 5px; border-radius: 4px; font-size: .9em; }
+.markdown table { border-collapse: collapse; }
+.markdown th, .markdown td { border: 1px solid var(--border); padding: 6px 12px; }
+.cursor { display: inline-block; width: 8px; height: 1.1em; background: var(--text); vertical-align: text-bottom; animation: blink 1s steps(1) infinite; }
+@keyframes blink { 50% { opacity: 0; } }
+.actions { margin-top: 4px; }
+.regen { align-self: center; border: 1px solid var(--border); border-radius: 999px; padding: 6px 14px; font-size: 13px; color: var(--muted); }
+
+.composer { display: flex; gap: 8px; align-items: flex-end; max-width: 780px; width: 100%; margin: 0 auto; padding: 12px 20px 20px; }
+.composer textarea { flex: 1; resize: none; border: 1px solid var(--border); border-radius: 14px; padding: 12px 14px; font: inherit;
+  background: var(--bg); color: var(--text); outline: none; }
+.composer textarea:focus { border-color: var(--accent); }
+.send { background: var(--accent); color: var(--accent-text); border-radius: 12px; padding: 12px 16px; font-weight: 600; white-space: nowrap; }
+.send:disabled { opacity: .4; cursor: default; }
+.send.stop { background: var(--text); color: var(--bg); }
+
+.overlay { position: fixed; inset: 0; background: rgb(0 0 0 / .45); display: grid; place-items: center; padding: 16px; }
+.dialog { background: var(--bg); border: 1px solid var(--border); border-radius: 14px; padding: 20px; width: min(460px, 100%); display: flex; flex-direction: column; gap: 12px; }
+.dialog h2 { margin: 0; }
+.dialog label { display: flex; flex-direction: column; gap: 4px; font-size: 13px; color: var(--muted); }
+.dialog input, .dialog select, .dialog textarea { font: inherit; padding: 8px 10px; border: 1px solid var(--border); border-radius: 8px; background: var(--bg-2); color: var(--text); }
+.hint { font-size: 12px; color: var(--muted); margin: 0; }
+.dialog-actions { display: flex; justify-content: flex-end; gap: 8px; }
+.dialog-actions button { padding: 8px 14px; border-radius: 8px; border: 1px solid var(--border); }
+.dialog-actions .primary { background: var(--accent); color: var(--accent-text); border: 0; }
+
+@media (max-width: 760px) {
+  .app { grid-template-columns: 1fr; }
+  .sidebar { position: fixed; inset: 0 30% 0 0; z-index: 10; transform: translateX(-100%); transition: transform .2s; }
+  .app.sidebar-open .sidebar { transform: none; }
+  .menu { display: inline-block; }
+}
